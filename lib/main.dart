@@ -3,7 +3,6 @@ import 'package:movies_app_2024/presentaion/home/home_screen.dart';
 import 'package:movies_app_2024/presentaion/my_theme/my_theme_data.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
