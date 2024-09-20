@@ -10,6 +10,7 @@ class MyThemeData{
   static const Color textPrimaryColor = Colors.white;
   static const Color colorDivider=Color(0xFF707070);
   static const Color iconColorBasic=Color(0xFFC6C6C6);
+  static const Color darkBackground=Colors.black;
 
 
 
@@ -62,7 +63,7 @@ class MyThemeData{
             fontFamily: 'Intel',
             color: textPrimaryColor
         ),
-        backgroundColor: darkPrimary,
+        backgroundColor: darkBackground,
         selectedItemColor:  darkPrimary,
         unselectedItemColor: iconColorBasic,
     ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_2024/presentaion/home/home_screen.dart';
-import 'package:movies_app_2024/presentaion/my_theme/my_theme_data.dart';
+import 'package:movies_app_2024/presentation/basic_files/default_screen.dart';
+import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
+import 'package:movies_app_2024/presentation/categories_screen/categories_sreen.dart';
+import 'package:movies_app_2024/presentation/home/home_screen.dart';
+import 'package:movies_app_2024/presentation/search_screen/search_screen.dart';
+import 'package:movies_app_2024/presentation/watch_list_screen/watch_list_screen.dart';
+
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -14,10 +18,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: MyThemeData.darkTheme,
-      home: const HomeScreen(),
+        initialRoute:DefaultScreen.routeName,
+        routes: {
+          DefaultScreen.routeName: (_) => DefaultScreen(),
+          CategoriesScreen.routeName: (_) => CategoriesScreen(),
+          HomeScreen.routeName: (_) => HomeScreen(),
+          SearchScreen.routeName: (_) => SearchScreen(),
+          WatchListScreen.routeName: (_) => WatchListScreen(),
+        },
+        theme: MyThemeData.darkTheme,
     );
   }
 }
