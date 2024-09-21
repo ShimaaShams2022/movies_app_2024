@@ -10,10 +10,10 @@ class MyThemeData{
   static const Color textPrimaryColor = Colors.white;
   static const Color colorDivider=Color(0xFF707070);
   static const Color iconColorBasic=Color(0xFFC6C6C6);
-  static const Color darkBackground=Colors.black;
-
-
-
+  static const Color darkBackground=Color(0xFF1A1A1A);
+  static const Color bookMarkBackground=Color(0xFF514F4F);
+  static const Color listBackground=Color(0xFF282A28);
+  static const Color posterDetailsBackground=Color(0xFF343534);
 
   static final ThemeData darkTheme= ThemeData(
 
@@ -52,19 +52,16 @@ class MyThemeData{
 
     ),
 
-    cardTheme: const CardTheme(
-      color: textPrimaryColor,
-      surfaceTintColor:null ,
-    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+       type: BottomNavigationBarType.fixed,
+        backgroundColor: darkBackground,
         selectedLabelStyle:TextStyle(
             fontSize: 8,
             fontWeight: FontWeight.w400,
             fontFamily: 'Intel',
             color: textPrimaryColor
         ),
-        backgroundColor: darkBackground,
-        selectedItemColor:  darkPrimary,
+       selectedItemColor:  darkPrimary,
         unselectedItemColor: iconColorBasic,
     ),
 
