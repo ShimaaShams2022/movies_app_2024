@@ -18,7 +18,7 @@ class PosterWithSomeDetails extends StatelessWidget {
       color: MyThemeData.posterDetailsBackground,
       child: Column(
         children: [
-          imageWithBookMarkWidget(imageName: imageName, addWatchList: addWatchList),
+          ImageWithBookMarkWidget(imageName: imageName, addWatchList: addWatchList),
           Container(
             margin:EdgeInsets.all(3) ,
             padding: EdgeInsets.all(3),

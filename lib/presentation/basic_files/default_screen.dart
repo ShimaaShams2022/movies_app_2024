@@ -20,6 +20,7 @@ class _DefaultScreenState extends State<DefaultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: tabs[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
