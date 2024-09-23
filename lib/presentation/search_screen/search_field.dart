@@ -7,8 +7,9 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(30.0),
+      padding: const EdgeInsets.all(40.0),
       child: TextFormField(
+        style: MyThemeData.darkTheme.textTheme.bodyLarge,
         decoration: InputDecoration(
           hintText: "Search",
           hintStyle:MyThemeData.darkTheme.textTheme.bodyLarge?.copyWith(color:  MyThemeData.boxMovieTextColor),
@@ -21,11 +22,13 @@ class SearchField extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(40)
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white
-            )
-          )
+          focusedBorder:OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: MyThemeData.boxMovieTextColor
+              ),
+              borderRadius: BorderRadius.circular(40)
+          ),
+
         ),
       ),
     );
