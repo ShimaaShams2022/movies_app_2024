@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/presentation/basic_files/book_mark_with_check.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
 
 import '../basic_files/utilities.dart';
 
-class SearchResultMovieWidget extends StatelessWidget {
-   SearchResultMovieWidget({required this.imageName,super.key});
+class WatchListMovieWidget extends StatelessWidget {
+  WatchListMovieWidget({required this.imageName,super.key});
   String? imageName;
 
   @override
@@ -17,7 +18,17 @@ class SearchResultMovieWidget extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20,right: 10,top: 10,bottom:10 ),
-              child: Image.asset(getFullPathImage(imageName!)),
+              child: Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Image.asset(getFullPathImage(imageName!)),
+                Positioned(
+                    top:-5,
+                    left:-9,
+                    child: BookMarkWithCheck()),
+
+                ],
+              ),
             ),
 
             Column(

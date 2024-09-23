@@ -26,13 +26,19 @@ class ImageWithBookMarkWidget extends StatelessWidget {
           },
             child: Image.asset(getFullPathImage(imageName))
         ),
-        const Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Icon(Icons.bookmark,color: MyThemeData.bookMarkBackground,size: 30),
-            Icon(Icons.add, color: Colors.white, size: 10,
-            )
-          ],
+        Positioned(
+          top:-5,
+          left: -8,
+          child: const Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              Opacity(
+                opacity:0.8,
+                  child: Icon(Icons.bookmark,color: MyThemeData.bookMarkBackground,size:40)),
+              Icon(Icons.add, color: Colors.white, size: 20,
+              )
+            ],
+          ),
         ),
       ],
     );

@@ -27,6 +27,12 @@ class MyThemeData{
 
     dividerColor:colorDivider,
     textTheme: const TextTheme(
+      headlineMedium: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w400,
+          fontFamily:'Intel' ,
+          color: textPrimaryColor
+      ),
       titleLarge: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
@@ -63,6 +69,12 @@ class MyThemeData{
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
        type: BottomNavigationBarType.fixed,
         backgroundColor: darkBackground,
+      unselectedLabelStyle:TextStyle(
+          fontSize: 8,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Intel',
+          color: textPrimaryColor
+      ),
         selectedLabelStyle:TextStyle(
             fontSize: 8,
             fontWeight: FontWeight.w400,

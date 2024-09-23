@@ -14,8 +14,21 @@ class PosterWithSomeDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: MyThemeData.posterDetailsBackground,
+        borderRadius: BorderRadius.circular(4),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            spreadRadius:1,
+            blurRadius: 3,
+            offset: Offset.zero, // changes position of shadow
+          ),
+        ],
+
+      ),
       margin: EdgeInsets.all(8),
-      color: MyThemeData.posterDetailsBackground,
+      //color: MyThemeData.posterDetailsBackground,
       child: Column(
         children: [
           ImageWithBookMarkWidget(imageName: imageName, addWatchList: addWatchList),
