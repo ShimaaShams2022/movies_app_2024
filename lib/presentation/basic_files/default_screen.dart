@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
-import 'package:movies_app_2024/presentation/categories_screen/categories_sreen.dart';
+
+import 'package:movies_app_2024/presentation/categories_screen/categories_screen.dart';
 import 'package:movies_app_2024/presentation/home/home_screen.dart';
 import 'package:movies_app_2024/presentation/search_screen/search_screen.dart';
 import 'package:movies_app_2024/presentation/watch_list_screen/watch_list_screen.dart';
