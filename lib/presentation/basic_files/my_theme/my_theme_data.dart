@@ -14,6 +14,14 @@ class MyThemeData{
   static const Color bookMarkBackground=Color(0xFF514F4F);
   static const Color listBackground=Color(0xFF282A28);
   static const Color posterDetailsBackground=Color(0xFF343534);
+  static const Color appbarBackground=Color(0xFF1D1E1D);
+  static const Color boxMovieBorderColor=Color(0xFF514F4F);
+  static const Color boxMovieTextColor=Color(0xFFCBCBCB);
+
+
+
+
+
 
   static final ThemeData darkTheme= ThemeData(
 

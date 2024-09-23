@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/presentation/basic_files/utilities.dart';
+import 'package:movies_app_2024/presentation/movie_details/movie_details_widget.dart';
 
 import '../basic_files/my_theme/my_theme_data.dart';
 
-class imageWithBookMarkWidget extends StatelessWidget {
-   imageWithBookMarkWidget(
+class ImageWithBookMarkWidget extends StatelessWidget {
+   ImageWithBookMarkWidget(
        {
          required this.imageName,
          required this.addWatchList,
@@ -19,7 +20,12 @@ class imageWithBookMarkWidget extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.topStart,
       children: [
-        Image.asset(getFullPathImage(imageName)),
+        InkWell(
+          onTap: (){
+            Navigator.pushNamed(context, MovieDetailsWidget.routeName);
+          },
+            child: Image.asset(getFullPathImage(imageName))
+        ),
         const Stack(
           alignment: AlignmentDirectional.center,
           children: [
