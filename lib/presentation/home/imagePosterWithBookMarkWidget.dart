@@ -28,7 +28,7 @@ class ImagePosterWithBookMarkWidget extends StatelessWidget {
             child: Container(
               height:200,
                 width: 120,
-                child:CachedNetworkImage(imageUrl:" https://api.themoviedb.org/$imageName",
+                child:CachedNetworkImage(imageUrl:"https://image.tmdb.org/t/p/w500${imageName}",
                 fit: BoxFit.fill,
                 ))
         ),

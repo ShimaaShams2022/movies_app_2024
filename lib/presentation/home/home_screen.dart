@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _startImageSwitching() {
     _timer = Timer.periodic(const Duration(milliseconds: 2500), (Timer timer) {
       setState(() {
-        _currentIndex = (_currentIndex + 1) ;
+        _currentIndex = (_currentIndex + 1);
       });
     });
   }
