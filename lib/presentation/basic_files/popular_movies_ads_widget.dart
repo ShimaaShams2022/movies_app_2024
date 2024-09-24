@@ -27,7 +27,7 @@ class PopularMoviesAdsWidget extends StatelessWidget {
               Container(
                 width: 400,
                 height:200 ,
-                child: CachedNetworkImage(imageUrl:adsMovie.backdropPath??"")
+                child: CachedNetworkImage(imageUrl:"https://api.themoviedb.org/3/movie/popular/9l1eZiJHmhr5jIlthMdJN5WYoff.jpg"??"")
                  // fit: BoxFit.cover ,
               ),
               SizedBox(height: 20),
