@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/presentation/basic_files/utilities.dart';
@@ -27,7 +28,7 @@ class ImagePosterWithBookMarkWidget extends StatelessWidget {
             child: Container(
               height:200,
                 width: 120,
-                child: Image.asset(getFullPathImage(imageName),
+                child:CachedNetworkImage(imageUrl:" https://api.themoviedb.org/$imageName",
                 fit: BoxFit.fill,
                 ))
         ),

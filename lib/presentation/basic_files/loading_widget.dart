@@ -7,12 +7,17 @@ class LoadingStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          const CircularProgressIndicator(),
-          Text(loadingMessage??"")
-        ],
+    return Container(
+      width: 400,
+      height: 360,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(),
+            Text(loadingMessage??"")
+          ],
+        ),
       ),
     );
   }
