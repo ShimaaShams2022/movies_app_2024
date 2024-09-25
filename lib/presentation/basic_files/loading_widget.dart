@@ -8,8 +8,8 @@ class LoadingStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
-      height: 360,
+      width: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height*0.3,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

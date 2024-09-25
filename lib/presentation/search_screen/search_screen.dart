@@ -20,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 50),
+        SizedBox(height: MediaQuery.of(context).size.height*0.1),
         SearchField(),
         SearchResultListWidget()
       ],
