@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/di.dart';
 import 'package:movies_app_2024/presentation/basic_files/default_screen.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
 import 'package:movies_app_2024/presentation/categories_screen/categories_screen.dart';
@@ -9,6 +10,7 @@ import 'package:movies_app_2024/presentation/watch_list_screen/watch_list_screen
 
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 

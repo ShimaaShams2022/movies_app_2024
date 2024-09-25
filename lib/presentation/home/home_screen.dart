@@ -2,17 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app_2024/di.dart';
 import 'package:movies_app_2024/presentation/basic_files/ErrorStateWidget.dart';
 import 'package:movies_app_2024/presentation/basic_files/loading_widget.dart';
-import 'package:movies_app_2024/presentation/basic_files/movie_main_text.dart';
+
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
-import 'package:movies_app_2024/presentation/basic_files/poster_with_play.dart';
+
 import 'package:movies_app_2024/presentation/home/home_view_model.dart';
 import 'package:movies_app_2024/presentation/home/imageWithBookMark.dart';
 import 'package:movies_app_2024/presentation/home/poster_with_some_details.dart';
 
 import '../basic_files/custom_ads_widget.dart';
-import '../basic_files/utilities.dart';
+
 
 class HomeScreen extends StatefulWidget {
    HomeScreen({super.key});
@@ -37,25 +38,19 @@ class _HomeScreenState extends State<HomeScreen> {
   late Timer _timer;
 
 
-  // final List<AdsMovie> ads = [
-  //   AdsMovie(movieYear:"2019",imageName: 'FilmPlay.png', adult: 'PG-13', movieDuration: '2h 7m', movieName: 'Dora and the lost city', posterName: 'posterFilm.png'),
-  //   AdsMovie(movieYear:"2020",imageName: 'categoryImage.png', adult: '+18', movieDuration: '1h 45m', movieName: 'the New Movie', posterName: 'categoryImage.png'),
-  //   AdsMovie(movieYear:"2018",imageName: 'searchResultImage.png', adult: 'PG-13', movieDuration: '2h 7m', movieName: 'Dora and the lost city', posterName: 'searchResultImage.png'),
-  //   AdsMovie(movieYear:"2023",imageName: 'categoryImage.png', adult: '+18', movieDuration: '1h 5m', movieName: 'Film new castle', posterName: 'categoryImage.png'),
-  // ];
-
 
   @override
   void initState() {
     super.initState();
-    _startImageSwitching();
+    _startImageSwitching(10);
     viewModel.loadHomeScreen();
   }
 
-  void _startImageSwitching() {
+void _startImageSwitching(int lengthOfList) {
+
     _timer = Timer.periodic(const Duration(milliseconds: 2500), (Timer timer) {
       setState(() {
-        _currentIndex = (_currentIndex + 1);
+        _currentIndex = (_currentIndex + 1) % lengthOfList;
       });
     });
   }
@@ -66,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-
-  var viewModel=HomeViewModel();
+//field injection
+  var viewModel=getIt.get<HomeViewModel>();
 
 
   @override
@@ -87,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(height: 40),
+                        SizedBox(height:MediaQuery.of(context).size.height*0.04),
                         CustomAdsWidget( popularResults: ads, currentIndex: _currentIndex, timer: _timer,),
                       ],
                     );
@@ -99,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
 
             ),
-
+            SizedBox(height:MediaQuery.of(context).size.height*0.01),
             Container(
               margin: EdgeInsets.only(top: 8,bottom: 8),
               padding:EdgeInsets.all(10),
@@ -112,12 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           height: 150,
                           child: ListView.builder(itemCount:imagesList.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context,index){
-                              return Container(
+                              return Padding(
                                 padding: EdgeInsets.all(5),
                                   child: ImageWithBookMarkWidget(
                                     imageName: imagesList[index],
@@ -143,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           height: 200,
                           child: ListView.builder(itemCount:imagesList.length,
                             scrollDirection: Axis.horizontal,
@@ -165,13 +160,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class AdsMovie{
-  String? imageName;
-  String? posterName;
-  String? movieName;
-  String? adult;
-  String? movieDuration;
-  String? movieYear;
-
-  AdsMovie( {required this.movieYear,required this.imageName,required this.adult,required this.movieDuration,required this.movieName,required this.posterName});
-}

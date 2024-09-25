@@ -14,10 +14,10 @@ class CategoriesScreen extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-            height: MediaQuery.of(context).size.height*0.06
+            height: MediaQuery.of(context).size.height*0.1
         ),
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(top: 0,bottom: 0,left: 25,right:10 ),
           child: Text("Browse Category",style: MyThemeData.darkTheme.textTheme.headlineMedium),
         ),
         AllCategoriesWidget(),

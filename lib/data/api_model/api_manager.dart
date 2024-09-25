@@ -1,7 +1,8 @@
 
 
 import 'package:dio/dio.dart';
-import 'package:movies_app_2024/data/Extentions.dart';
+import 'package:injectable/injectable.dart';
+import 'package:movies_app_2024/data/api_model/Extensions.dart';
 import 'package:movies_app_2024/data/api_model/popular_movies/popular_response.dart';
 
 import '../../domain/Result.dart';
@@ -9,7 +10,7 @@ import 'ErrorResponse.dart';
 import 'Results.dart';
 
 
-
+@singleton
 class ApiManager{
 
   final dio=Dio();

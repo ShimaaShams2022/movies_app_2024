@@ -7,7 +7,7 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(40.0),
+      padding: const EdgeInsets.only(top: 0,bottom: 5,left: 40,right: 40),
       child: TextFormField(
         style: MyThemeData.darkTheme.textTheme.bodyLarge,
         decoration: InputDecoration(
