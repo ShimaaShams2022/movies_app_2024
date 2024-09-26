@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/presentation/basic_files/utilities.dart';
@@ -6,15 +5,15 @@ import 'package:movies_app_2024/presentation/movie_details/movie_details_widget.
 
 import '../basic_files/my_theme/my_theme_data.dart';
 
-class ImagePosterWithBookMarkWidget extends StatelessWidget {
-   ImagePosterWithBookMarkWidget(
+class NetworkPosterWithBookmark extends StatelessWidget {
+  NetworkPosterWithBookmark(
        {
          required this.imageName,
          required this.addWatchList,
          super.key});
 
-  String imageName;
-  bool addWatchList=false;
+  String? imageName;
+  bool? addWatchList=false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +24,11 @@ class ImagePosterWithBookMarkWidget extends StatelessWidget {
           onTap: (){
             Navigator.pushNamed(context, MovieDetailsWidget.routeName);
           },
-            child: Container(
-              height:200,
-                width: 120,
-                child:CachedNetworkImage(imageUrl:"https://image.tmdb.org/t/p/w500${imageName}",
-                fit: BoxFit.cover,
-                ))
+            child:  Image.network('https://image.tmdb.org/t/p/w500${imageName}',
+              width: 100,
+              fit: BoxFit.fill,
+
+            )
         ),
         Positioned(
           top:-5,
