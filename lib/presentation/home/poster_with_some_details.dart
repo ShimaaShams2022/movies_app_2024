@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
 import 'package:movies_app_2024/presentation/home/imageWithBookMark.dart';
+import 'package:movies_app_2024/presentation/home/networkPosterWithBookMark.dart';
 
 class PosterWithSomeDetails extends StatelessWidget {
   PosterWithSomeDetails(
@@ -8,7 +9,7 @@ class PosterWithSomeDetails extends StatelessWidget {
         required this.addWatchList,
         super.key});
 
-  String imageName;
+  String? imageName;
   bool addWatchList=false;
 
   @override
@@ -28,10 +29,13 @@ class PosterWithSomeDetails extends StatelessWidget {
 
       ),
       margin: EdgeInsets.all(8),
-      //color: MyThemeData.posterDetailsBackground,
+
       child: Column(
         children: [
-          ImageWithBookMarkWidget(imageName: imageName, addWatchList: addWatchList),
+          SizedBox(
+              width: 100,
+              height: 120,
+              child: NetworkPosterWithBookmark(imageName: imageName, addWatchList: addWatchList)),
           Container(
             margin:EdgeInsets.all(3) ,
             padding: EdgeInsets.all(3),

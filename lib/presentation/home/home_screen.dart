@@ -7,16 +7,18 @@ import 'package:movies_app_2024/presentation/basic_files/ErrorStateWidget.dart';
 import 'package:movies_app_2024/presentation/basic_files/loading_widget.dart';
 
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
+import 'package:movies_app_2024/presentation/home/home_view_models/new_releases_view_model.dart';
 
-import 'package:movies_app_2024/presentation/home/home_view_model.dart';
 import 'package:movies_app_2024/presentation/home/imageWithBookMark.dart';
+import 'package:movies_app_2024/presentation/home/networkPosterWithBookMark.dart';
 import 'package:movies_app_2024/presentation/home/poster_with_some_details.dart';
 
 import '../basic_files/custom_ads_widget.dart';
-
+import 'home_view_models/popular_view_model.dart';
+import 'home_view_models/recommended_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
 
   static const String routeName = "HomeScreen";
 
@@ -25,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List imagesList=[
+  List imagesList = [
     "posterSmall.png",
     "posterSmall.png",
     "posterSmall.png",
@@ -37,17 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   late Timer _timer;
 
-
-
   @override
   void initState() {
     super.initState();
     _startImageSwitching(10);
-    viewModel.loadHomeScreen();
+    popularViewModel.loadPopularHomeScreen();
+    newReleasesViewModel.loadNewReleasesHomeScreen();
+    recommendedViewModel.loadRecommendedHomeScreen();
   }
 
-void _startImageSwitching(int lengthOfList) {
-
+  void _startImageSwitching(int lengthOfList) {
     _timer = Timer.periodic(const Duration(milliseconds: 2500), (Timer timer) {
       setState(() {
         _currentIndex = (_currentIndex + 1) % lengthOfList;
@@ -62,101 +63,152 @@ void _startImageSwitching(int lengthOfList) {
   }
 
 //field injection
-  var viewModel=getIt.get<HomeViewModel>();
-
+  var popularViewModel = getIt.get<PopularViewModel>();
+  var newReleasesViewModel = getIt.get<NewReleasesViewModel>();
+  var recommendedViewModel = getIt.get<RecommendedViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeViewModel>(
-      create: (context)=>viewModel,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PopularViewModel>(
+            create: (BuildContext context) => popularViewModel),
+        BlocProvider<NewReleasesViewModel>(
+            create: (BuildContext context) => newReleasesViewModel),
+        BlocProvider<RecommendedViewModel>(
+            create: (BuildContext context) => recommendedViewModel)
+      ],
       child: SingleChildScrollView(
         child: Column(
           children: [
-            BlocBuilder<HomeViewModel,HomeState>(
-              builder: (context,state){
-                switch(state) {
-                  case LoadingState():
+            BlocBuilder<PopularViewModel, PopularHomeState>(
+              builder: (context, state) {
+                switch (state) {
+                  case PopularLoadingState():
                     return LoadingStateWidget();
-                  case SuccessState():{
-                    var ads=state.movieResults ??[];
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height:MediaQuery.of(context).size.height*0.04),
-                        CustomAdsWidget( popularResults: ads, currentIndex: _currentIndex, timer: _timer,),
-                      ],
-                    );
-                  }
-                  case ErrorState():
+                  case PopularSuccessState():
+                    {
+                      var ads = state.movieResults ?? [];
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.04),
+                          CustomAdsWidget(
+                            popularResults: ads,
+                            currentIndex: _currentIndex,
+                            timer: _timer,
+                          ),
+                        ],
+                      );
+                    }
+                  case PopularErrorState():
                     return ErrorStateWidget(state.exception);
                 }
-
               },
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            BlocBuilder<NewReleasesViewModel, NewReleasesHomeState>(
+              builder: (context, state) {
+                switch (state) {
+                  case NewReleasesLoadingState():
+                    return LoadingStateWidget();
+                  case NewReleasesSuccessState():
+                    {
+                      var newReleasesMoviesList = state.movieResults ?? [];
+                      return Container(
+                        margin: EdgeInsets.only(top: 8, bottom: 8),
+                        padding: EdgeInsets.all(10),
+                        color: MyThemeData.listBackground,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "New Releases",
+                              style: MyThemeData.darkTheme.textTheme.titleSmall,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 150,
+                                    child: ListView.builder(
+                                      itemCount: newReleasesMoviesList.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: NetworkPosterWithBookmark(
+                                              imageName: newReleasesMoviesList[index].posterPath,
+                                              addWatchList: false,
+                                            ));
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  case NewReleasesErrorState():
+                    return ErrorStateWidget(state.exception);
+                }
+              },
+            ),
+            BlocBuilder<RecommendedViewModel, RecommendedHomeState>(
+              builder: (context, state) {
+                switch (state) {
+                  case RecommendedLoadingState():
+                    return LoadingStateWidget();
+                  case RecommendedSuccessState():
+                    {
+                      var recommendedMoviesList = state.movieResults ?? [];
+                      return Container(
+                        margin: EdgeInsets.only(top: 8, bottom: 8),
+                        padding: EdgeInsets.all(10),
+                        color: MyThemeData.listBackground,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Recommended",
+                              style: MyThemeData.darkTheme.textTheme.titleSmall,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 200,
+                                    child: ListView.builder(
+                                      itemCount: recommendedMoviesList.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return PosterWithSomeDetails(
+                                          imageName: recommendedMoviesList[index].posterPath,
+                                          addWatchList: false,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                  case RecommendedErrorState():
+                    return ErrorStateWidget(state.exception);
+                }
+              },
+            ),
 
-            ),
-            SizedBox(height:MediaQuery.of(context).size.height*0.01),
-            Container(
-              margin: EdgeInsets.only(top: 8,bottom: 8),
-              padding:EdgeInsets.all(10),
-              color: MyThemeData.listBackground,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("New Releases",style: MyThemeData.darkTheme.textTheme.titleSmall,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 150,
-                          child: ListView.builder(itemCount:imagesList.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context,index){
-                              return Padding(
-                                padding: EdgeInsets.all(5),
-                                  child: ImageWithBookMarkWidget(
-                                    imageName: imagesList[index],
-                                    addWatchList: false,));
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 8,bottom: 8),
-              padding:EdgeInsets.all(10),
-              color: MyThemeData.listBackground,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Recommended",style: MyThemeData.darkTheme.textTheme.titleSmall,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 200,
-                          child: ListView.builder(itemCount:imagesList.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context,index){
-                              return PosterWithSomeDetails(imageName: imagesList[index],addWatchList: false,);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
           ],
         ),
       ),
     );
   }
 }
-
