@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/data/api_model/Results.dart';
+import 'package:movies_app_2024/presentation/basic_files/chech_adult.dart';
+import 'package:movies_app_2024/presentation/basic_files/utilities.dart';
 
 import 'my_theme/my_theme_data.dart';
 
@@ -29,13 +31,13 @@ class MovieMainText extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(
-                adsMovie.releaseDate??"",
+                splitYear(adsMovie.releaseDate??""),
                 style: MyThemeData.darkTheme.textTheme.bodyMedium,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text(isAdult ? "+18":"PG-13" ,
+              child: Text(checkAdult(adsMovie.adult??false) ,
                 style: MyThemeData.darkTheme.textTheme.bodyMedium,
               ),
             ),

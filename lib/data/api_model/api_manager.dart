@@ -3,11 +3,14 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app_2024/data/api_model/Extensions.dart';
+import 'package:movies_app_2024/data/api_model/movie_details/MovieDetailsResponse.dart';
 import 'package:movies_app_2024/data/api_model/popular_movies/popular_response.dart';
 import 'package:movies_app_2024/data/api_model/recommended/RecommendedResponse.dart';
+import 'package:movies_app_2024/data/api_model/similar_movies/SimilarMoviesResponse.dart';
 
 import '../../domain/Result.dart';
 import 'ErrorResponse.dart';
+import 'Genres.dart';
 import 'Results.dart';
 import 'new_releases/NewReleasesResponse.dart';
 
@@ -16,12 +19,15 @@ import 'new_releases/NewReleasesResponse.dart';
 class ApiManager{
 
   final dio=Dio();
+  String? movieId;
 
   static  String baseUrl="https://api.themoviedb.org";
-  static  String PopularMoviesEndpoint ="$baseUrl/3/movie/popular";
-  static  String NewReleasesMoviesEndpoint ="$baseUrl/3/movie/upcoming";
-  static  String RecommendedMoviesEndpoint ="$baseUrl/3/movie/top_rated";
+  static  String middleUrl="$baseUrl/3/movie";
+  static  String PopularMoviesEndpoint ="$middleUrl/popular";
+  static  String NewReleasesMoviesEndpoint ="$middleUrl/upcoming";
+  static  String RecommendedMoviesEndpoint ="$middleUrl/top_rated";
 
+  static  String GenresMoviesEndpoint ="$baseUrl//3/genre/movie/list";
 
   Future<Result<List<Results>?>> loadPopularMovies()async{
     try{
@@ -77,4 +83,64 @@ class ApiManager{
 
   }
 
+  Future<Result<List<Results>?>> loadSimilarMovies(String movieId)async{
+    try{
+      String movieDetailsEndpoint = "$middleUrl/$movieId" ;
+      String similarMoviesEndpoint ="$movieDetailsEndpoint/similar";
+
+      dio.options.headers['Authorization']='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDk4MzhiNzJjMmZjMDY5ODFlNDExOGI5Njg0MGY3YyIsIm5iZiI6MTcyNzIwNDc2My43NzgyMiwic3ViIjoiNjMyYzlkNDNjNTI1YzQwMDkxYzZkYTgzIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.aczZfEluA9b9ccjUvg1nGZnH4mtksXCK9Q54ojugtVM';
+      var response = await dio.get(similarMoviesEndpoint);
+      var similarResponse=SimilarMoviesResponse.fromJson(response.data);
+
+      if(response.statusCode?.isSuccessCall()==true){
+        return Success(data: similarResponse.results);
+      }
+      var errorResponse=ErrorResponse.fromJson(response.data);
+      return ServerError(ServerErrorException(errorResponse.statusMessage));
+
+    }on Exception catch(ex){
+      return Error(ex);
+    }
+
+  }
+
+  Future<Result<List<Results>?>> loadSearchMovies(String query)async{
+    try{
+
+
+      String searchMoviesEndpoint = "$baseUrl/3/search/movie?query=$query" ;
+
+      dio.options.headers['Authorization']='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDk4MzhiNzJjMmZjMDY5ODFlNDExOGI5Njg0MGY3YyIsIm5iZiI6MTcyNzIwNDc2My43NzgyMiwic3ViIjoiNjMyYzlkNDNjNTI1YzQwMDkxYzZkYTgzIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.aczZfEluA9b9ccjUvg1nGZnH4mtksXCK9Q54ojugtVM';
+      var response = await dio.get(searchMoviesEndpoint);
+      var searchResponse=SimilarMoviesResponse.fromJson(response.data);
+
+      if(response.statusCode?.isSuccessCall()==true){
+        return Success(data: searchResponse.results);
+      }
+      var errorResponse=ErrorResponse.fromJson(response.data);
+      return ServerError(ServerErrorException(errorResponse.statusMessage));
+
+    }on Exception catch(ex){
+      return Error(ex);
+    }
+
+  }
+
+  Future<Result<Genres>> loadGenresOfMovies()async{
+    try{
+
+      dio.options.headers['Authorization']='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDk4MzhiNzJjMmZjMDY5ODFlNDExOGI5Njg0MGY3YyIsIm5iZiI6MTcyNzIwNDc2My43NzgyMiwic3ViIjoiNjMyYzlkNDNjNTI1YzQwMDkxYzZkYTgzIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.aczZfEluA9b9ccjUvg1nGZnH4mtksXCK9Q54ojugtVM';
+      var response = await dio.get( GenresMoviesEndpoint);
+      var genresResponse=Genres.fromJson(response.data);
+      if(response.statusCode?.isSuccessCall()==true){
+        return Success(data: genresResponse);
+      }
+      var errorResponse=ErrorResponse.fromJson(response.data);
+      return ServerError(ServerErrorException(errorResponse.statusMessage));
+
+    }on Exception catch(ex){
+      return Error(ex);
+    }
+
+  }
 }

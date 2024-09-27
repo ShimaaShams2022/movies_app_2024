@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:movies_app_2024/presentation/home/imagePosterWithBookMarkWidget.dart';
+import 'package:movies_app_2024/presentation/home/popular_poster_with_book_mark_widget.dart';
 
 import '../../data/api_model/Results.dart';
 import 'movie_main_text.dart';
@@ -42,7 +42,7 @@ class PopularMoviesAdsWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15,horizontal:15 ),
-            child:  ImagePosterWithBookMarkWidget(
+            child:  PopularPosterWithBookMarkWidget(
               imageName: adsMovie.posterPath ?? "",
               addWatchList: false,
 

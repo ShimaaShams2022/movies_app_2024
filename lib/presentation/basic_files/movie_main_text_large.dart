@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/presentation/basic_files/chech_adult.dart';
+import 'package:movies_app_2024/presentation/basic_files/utilities.dart';
 
+import '../../data/api_model/Results.dart';
 import 'my_theme/my_theme_data.dart';
 
 class MovieMainTextLarge extends StatelessWidget {
-  const MovieMainTextLarge({super.key});
+   MovieMainTextLarge(this.filmInformation,{super.key});
+
+  Results? filmInformation;
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +19,28 @@ class MovieMainTextLarge extends StatelessWidget {
 
         children: [
           Text(
-            "Dora and the lost city of gold",
+            filmInformation?.title??"",
             style: MyThemeData.darkTheme.textTheme.titleMedium,
           ),
           SizedBox(height: 10),
           Row(
             children: [
               Text(
-                "2019",
-                style: MyThemeData.darkTheme.textTheme.bodyMedium,
+               splitYear(filmInformation?.releaseDate??""),
+                style: MyThemeData.darkTheme.textTheme.bodyMedium?.
+                copyWith(color: MyThemeData.smallTextColor),
               ),
+              SizedBox(width:MediaQuery.of(context).size.width*0.02),
               Text(
-                "PG-13",
-                style: MyThemeData.darkTheme.textTheme.bodyMedium,
+                checkAdult(filmInformation?.adult?? false),
+                style: MyThemeData.darkTheme.textTheme.bodyMedium?.
+                copyWith(color: MyThemeData.smallTextColor),
               ),
+              SizedBox(width:MediaQuery.of(context).size.width*0.02),
               Text(
-                "2h 7m",
-                style: MyThemeData.darkTheme.textTheme.bodyMedium,
+                "2h 52m",
+                style: MyThemeData.darkTheme.textTheme.bodyMedium?.
+                copyWith(color: MyThemeData.smallTextColor),
               )
             ],
           ),

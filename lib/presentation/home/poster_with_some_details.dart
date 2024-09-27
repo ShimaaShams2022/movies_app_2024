@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/data/api_model/Results.dart';
+import 'package:movies_app_2024/presentation/basic_files/chech_adult.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
-import 'package:movies_app_2024/presentation/home/imageWithBookMark.dart';
-import 'package:movies_app_2024/presentation/home/networkPosterWithBookMark.dart';
+import 'package:movies_app_2024/presentation/basic_files/utilities.dart';
+import 'package:movies_app_2024/presentation/home/network_poster_with_book_mark.dart';
 
 class PosterWithSomeDetails extends StatelessWidget {
   PosterWithSomeDetails(
-      {required this.imageName,
-        required this.addWatchList,
+      {required this.filmInformation,
         super.key});
 
-  String? imageName;
-  bool addWatchList=false;
+
+  Results filmInformation;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class PosterWithSomeDetails extends StatelessWidget {
       decoration: BoxDecoration(
         color: MyThemeData.posterDetailsBackground,
         borderRadius: BorderRadius.circular(4),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             spreadRadius:1,
@@ -33,35 +36,37 @@ class PosterWithSomeDetails extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-              width: 100,
-              height: 120,
-              child: NetworkPosterWithBookmark(imageName: imageName, addWatchList: addWatchList)),
+              width:MediaQuery.of(context).size.width*0.22,
+              height: MediaQuery.of(context).size.height*0.14,
+              child: NetworkPosterWithBookmark(addWatchList:false , filmInformation: filmInformation ,)),
           Container(
-            margin:EdgeInsets.all(3) ,
-            padding: EdgeInsets.all(3),
+            margin:const EdgeInsets.all(3) ,
+            padding: const EdgeInsets.all(3),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.star,color: MyThemeData.darkPrimary,size: 12,),
-                    Text("7.7"),
+                    const Icon(Icons.star,color: MyThemeData.darkPrimary,size: 12,),
+                    Text(roundedNumber(filmInformation.voteAverage!), style: MyThemeData.darkTheme.textTheme.bodyMedium,),
                   ],
                 ),
-                Text("Narcos"),
+                Text(filmInformation.title??"",softWrap: true, style: MyThemeData.darkTheme.textTheme.bodyMedium,),
                 Row(
                   children: [
                     Text(
-                      "2018",
-                      style: MyThemeData.darkTheme.textTheme.bodyMedium,
+                      splitYear(filmInformation.releaseDate??""),
+                      style: MyThemeData.darkTheme.textTheme.bodySmall,
                     ),
+                    SizedBox(width:MediaQuery.of(context).size.width*0.01,),
                     Text(
-                      "R",
-                      style: MyThemeData.darkTheme.textTheme.bodyMedium,
+                      checkAdult(filmInformation.adult?? false),
+                      style: MyThemeData.darkTheme.textTheme.bodySmall,
                     ),
+                    SizedBox(width:MediaQuery.of(context).size.width*0.01,),
                     Text(
-                      "1h 59m",
-                      style: MyThemeData.darkTheme.textTheme.bodyMedium,
+                      "2h 52m",
+                      style: MyThemeData.darkTheme.textTheme.bodySmall,
                     )
                   ],
                 ),
