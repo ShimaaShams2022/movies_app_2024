@@ -23,66 +23,80 @@ class SearchScreen extends StatefulWidget {
 var searchViewModel = getIt.get<SearchViewModel>();
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    NoMoviesFound();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     String? query;
 
-    List<Results> searchMoviesList =[];
+    List<Results>? searchMoviesList =[];
 
     return BlocProvider(
       create: (BuildContext context) => searchViewModel,
-      child: BlocBuilder<SearchViewModel, SearchHomeState>(
-          builder: (context, state) {
-        switch (state) {
-          case SearchLoadingState():
-            {
-            return LoadingStateWidget();
-          }
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 0, bottom: 5, left: 40, right: 40),
+            child: TextField(
+              onChanged: (query) {
+                if (query.isNotEmpty) {
+                  searchViewModel.loadSearchHomeScreen(query);
+                }
 
-          case SearchSuccessState():
-
-            return Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 0, bottom: 5, left: 40, right: 40),
-                  child: TextFormField(
-                    onChanged: (query) {
-                      if (query.isNotEmpty) {
-                        searchViewModel.loadSearchHomeScreen(query);
-                        searchMoviesList = state.movieResults ?? [];
-                      }
-                    },
-                    style: MyThemeData.darkTheme.textTheme.bodyLarge,
-                    decoration: InputDecoration(
-                      hintText: "Search",
-                      hintStyle: MyThemeData.darkTheme.textTheme.bodyLarge
-                          ?.copyWith(color: MyThemeData.boxMovieTextColor),
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: MyThemeData.iconColorBasic,
-                      ),
-                      filled: true,
-                      fillColor: MyThemeData.boxMovieBorderColor,
-                      enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: MyThemeData.boxMovieTextColor),
-                          borderRadius: BorderRadius.circular(40)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: MyThemeData.boxMovieTextColor),
-                          borderRadius: BorderRadius.circular(40)),
-                    ),
-                  ),
+              },
+              style: MyThemeData.darkTheme.textTheme.bodyLarge,
+              decoration: InputDecoration(
+                hintText: "Search",
+                hintStyle: MyThemeData.darkTheme.textTheme.bodyLarge
+                    ?.copyWith(color: MyThemeData.boxMovieTextColor),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: MyThemeData.iconColorBasic,
                 ),
-                SearchResultListWidget(resultList: searchMoviesList)
-              ],
-            );
-          case SearchErrorState():
-          return ErrorStateWidget(state.exception);
-        }
-      }),
+                filled: true,
+                fillColor: MyThemeData.boxMovieBorderColor,
+                enabledBorder: OutlineInputBorder(
+                    borderSide:
+                    BorderSide(color: MyThemeData.boxMovieTextColor),
+                    borderRadius: BorderRadius.circular(40)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                        color: MyThemeData.boxMovieTextColor),
+                    borderRadius: BorderRadius.circular(40)),
+              ),
+            ),
+          ),
+          BlocBuilder<SearchViewModel, SearchHomeState>(
+              builder: (context, state) {
+
+                switch (state) {
+                  case SearchLoadingState():
+                    {
+                      return LoadingStateWidget();
+                    }
+                  case SearchSuccessState():
+                    {
+                      searchMoviesList = state.movieResults;
+                      return SearchResultListWidget(resultList: searchMoviesList??[]);
+                    }
+                  case SearchErrorState():
+                    return ErrorStateWidget(state.exception);
+
+                }
+              }),
+        ],
+      ),
+
+
     );
   }
 }

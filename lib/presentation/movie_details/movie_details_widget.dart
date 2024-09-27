@@ -49,8 +49,10 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     final Results? filmInformation=ModalRoute.of(context)?.settings.arguments as Results?;
     similarViewModel.loadSimilarHomeScreen((filmInformation?.id).toString());
+
     return BlocProvider(
       create: (BuildContext context) =>similarViewModel ,
       child: Scaffold(
@@ -112,24 +114,22 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget> {
                           margin: EdgeInsets.only(top: 8,bottom: 8),
                           padding:EdgeInsets.all(10),
                           color: MyThemeData.listBackground,
-                          child: Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("More Like This",style: MyThemeData.darkTheme.textTheme.titleSmall,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("More Like This",style: MyThemeData.darkTheme.textTheme.titleSmall,
+                              ),
+                              SizedBox(
+                                height: 210,
+                                child: ListView.builder(itemCount:similarMoviesList.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context,index){
+                                    return PosterWithSomeDetails(
+                                        filmInformation:similarMoviesList[index]);
+                                  },
                                 ),
-                                SizedBox(
-                                  height: 210,
-                                  child: ListView.builder(itemCount:similarMoviesList.length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context,index){
-                                      return PosterWithSomeDetails(
-                                          filmInformation:similarMoviesList[index]);
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         );
                       }

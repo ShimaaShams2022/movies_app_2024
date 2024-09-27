@@ -1,6 +1,7 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:movies_app_2024/presentation/search_screen/no_movies_found.dart';
 
 import '../../../data/api_model/Results.dart';
 import '../../../domain/Result.dart';
@@ -22,6 +23,7 @@ class SearchViewModel extends Cubit<SearchHomeState>{
     var result=await searchRepository.getSearch(query);
 
     switch(result){
+
       case Success():{
         emit(SearchSuccessState(result.data));
       }
@@ -36,11 +38,15 @@ class SearchViewModel extends Cubit<SearchHomeState>{
     }
 
   }
+
+
 }
 
 sealed class SearchHomeState {}
 
 class SearchLoadingState extends SearchHomeState {}
+
+
 
 class SearchSuccessState extends SearchHomeState {
   List<Results>? movieResults;

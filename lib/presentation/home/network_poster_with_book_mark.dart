@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/presentation/basic_files/loading_small_image.dart';
 import 'package:movies_app_2024/presentation/movie_details/movie_details_widget.dart';
 import '../../data/api_model/Results.dart';
 import '../basic_files/my_theme/my_theme_data.dart';
@@ -24,11 +25,7 @@ class NetworkPosterWithBookmark extends StatelessWidget {
             arguments: filmInformation
             );
           },
-            child:  Image.network('https://image.tmdb.org/t/p/w500${filmInformation?.posterPath}',
-              width: MediaQuery.of(context).size.width*0.22,
-              fit: BoxFit.fill,
-
-            )
+            child: LoadingSmallImage(imageName: filmInformation?.posterPath)
         ),
         const Positioned(
           top:-5,
