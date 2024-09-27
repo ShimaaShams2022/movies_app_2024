@@ -1,0 +1,24 @@
+import 'package:injectable/injectable.dart';
+import 'package:movies_app_2024/data/api_model/Results.dart';
+
+
+import 'package:movies_app_2024/domain/Result.dart';
+
+import '../../domain/repository/search_repository.dart';
+import '../data_source/search_online_data_source.dart';
+
+
+
+
+@Injectable(as: SearchRepository)
+class SearchRepositoryImpl implements SearchRepository{
+  SearchOnlineDataSource dataSource;
+ @factoryMethod
+ SearchRepositoryImpl(this.dataSource);
+
+  @override
+  Future<Result<List<Results>?>> getSearch(String query){
+      return dataSource.getSearch(query);
+  }
+
+}

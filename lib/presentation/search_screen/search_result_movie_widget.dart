@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/data/api_model/Results.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
 
-import '../basic_files/utilities.dart';
 
 class SearchResultMovieWidget extends StatelessWidget {
-   SearchResultMovieWidget({required this.imageName,super.key});
-  String? imageName;
+   SearchResultMovieWidget({required this.film,super.key});
+  Results film;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SearchResultMovieWidget extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20,right: 10,top: 10,bottom:10 ),
-              child: Image.asset(getFullPathImage(imageName!)),
+              child: Image.network('https://image.tmdb.org/t/p/w500${film.posterPath}'),
             ),
 
             Column(

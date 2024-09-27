@@ -9,21 +9,26 @@ class SearchField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 0,bottom: 5,left: 40,right: 40),
       child: TextFormField(
+        onChanged: (query){
+          if(query.isNotEmpty){
+
+          }
+            },
         style: MyThemeData.darkTheme.textTheme.bodyLarge,
         decoration: InputDecoration(
           hintText: "Search",
           hintStyle:MyThemeData.darkTheme.textTheme.bodyLarge?.copyWith(color:  MyThemeData.boxMovieTextColor),
-          prefixIcon: Icon(Icons.search,color: MyThemeData.iconColorBasic,),
+          prefixIcon: const Icon(Icons.search,color: MyThemeData.iconColorBasic,),
           filled: true,
           fillColor: MyThemeData.boxMovieBorderColor,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: MyThemeData.boxMovieTextColor
             ),
             borderRadius: BorderRadius.circular(40)
           ),
           focusedBorder:OutlineInputBorder(
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                   color: MyThemeData.boxMovieTextColor
               ),
               borderRadius: BorderRadius.circular(40)

@@ -23,8 +23,12 @@ class CustomAdsWidget extends StatelessWidget {
       child: Stack(
         children: [
           AnimatedSwitcher(
-            switchInCurve: Curves.fastEaseInToSlowEaseOut,
-            duration: const Duration(milliseconds: 2500),
+            switchInCurve:Curves.easeInOut ,
+            switchOutCurve: Curves.fastOutSlowIn,
+            duration: const Duration(seconds: 5),
+            transitionBuilder: (Widget child,Animation<double> animation){
+             return FadeTransition(opacity: animation,child: child);
+            },
             child:PopularMoviesAdsWidget(adsMovie: popularResults[currentIndex],
               key:  ValueKey<int>(currentIndex),)
           ),

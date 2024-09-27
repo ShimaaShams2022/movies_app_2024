@@ -14,10 +14,9 @@ class Error<T> extends Result<T>{
   Exception exception;
   Error(this.exception);
 }
-
 class ServerErrorException implements Exception{
   String? statusMsg;
 
   ServerErrorException(this.statusMsg);
-
 }
+

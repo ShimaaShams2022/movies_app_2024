@@ -9,8 +9,8 @@ import 'package:movies_app_2024/presentation/basic_files/loading_widget.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
 import 'package:movies_app_2024/presentation/home/home_view_models/new_releases_view_model.dart';
 
-import 'package:movies_app_2024/presentation/home/imageWithBookMark.dart';
-import 'package:movies_app_2024/presentation/home/networkPosterWithBookMark.dart';
+import 'package:movies_app_2024/presentation/home/image_with_book_mark_widget.dart';
+import 'package:movies_app_2024/presentation/home/network_poster_with_book_mark.dart';
 import 'package:movies_app_2024/presentation/home/poster_with_some_details.dart';
 
 import '../basic_files/custom_ads_widget.dart';
@@ -27,14 +27,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List imagesList = [
-    "posterSmall.png",
-    "posterSmall.png",
-    "posterSmall.png",
-    "posterSmall.png",
-    "posterSmall.png",
-    "posterSmall.png"
-  ];
 
   int _currentIndex = 0;
   late Timer _timer;
@@ -49,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _startImageSwitching(int lengthOfList) {
-    _timer = Timer.periodic(const Duration(milliseconds: 2500), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       setState(() {
         _currentIndex = (_currentIndex + 1) % lengthOfList;
       });
@@ -140,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         return Padding(
                                             padding: EdgeInsets.all(5),
                                             child: NetworkPosterWithBookmark(
-                                              imageName: newReleasesMoviesList[index].posterPath,
+                                              filmInformation: newReleasesMoviesList[index],
                                               addWatchList: false,
                                             ));
                                       },
@@ -187,8 +179,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
                                         return PosterWithSomeDetails(
-                                          imageName: recommendedMoviesList[index].posterPath,
-                                          addWatchList: false,
+                                          filmInformation:recommendedMoviesList[index]
+
                                         );
                                       },
                                     ),

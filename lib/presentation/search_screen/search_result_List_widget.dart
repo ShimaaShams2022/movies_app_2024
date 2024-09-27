@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/presentation/search_screen/search_result_movie_widget.dart';
 
+import '../../data/api_model/Results.dart';
+
 class SearchResultListWidget extends StatelessWidget {
-   SearchResultListWidget({super.key});
+   SearchResultListWidget({
+     required this.resultList,
+     super.key});
+
+   List<Results> resultList;
 
   List imagesList=[
     "searchResultImage.png",
@@ -17,10 +23,10 @@ class SearchResultListWidget extends StatelessWidget {
     return Expanded(
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
-        child: ListView.builder(itemCount:imagesList.length,
+        child: ListView.builder(itemCount:resultList.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context,index){
-            return SearchResultMovieWidget(imageName: imagesList[index]);
+            return SearchResultMovieWidget(film: resultList[index]);
           },
         ),
       ),

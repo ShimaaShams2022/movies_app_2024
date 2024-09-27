@@ -17,6 +17,7 @@ class MyThemeData{
   static const Color appbarBackground=Color(0xFF1D1E1D);
   static const Color boxMovieBorderColor=Color(0xFF514F4F);
   static const Color boxMovieTextColor=Color(0xFFCBCBCB);
+  static const Color smallTextColor=Color(0xFFB5B4B4);
 
 
 
@@ -59,6 +60,12 @@ class MyThemeData{
       ),
       bodyMedium:TextStyle(
           fontSize: 10,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Intel',
+          color: textPrimaryColor
+      ),
+      bodySmall:TextStyle(
+          fontSize: 8,
           fontWeight: FontWeight.w400,
           fontFamily: 'Intel',
           color: textPrimaryColor
