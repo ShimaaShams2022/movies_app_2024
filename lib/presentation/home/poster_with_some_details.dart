@@ -40,8 +40,8 @@ class PosterWithSomeDetails extends StatelessWidget {
               height: MediaQuery.of(context).size.height*0.14,
               child: NetworkPosterWithBookmark(addWatchList:false , filmInformation: filmInformation ,)),
           Container(
-            margin:const EdgeInsets.all(3) ,
-            padding: const EdgeInsets.all(3),
+            margin:const EdgeInsets.all(0) ,
+            padding: const EdgeInsets.all(2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -51,7 +51,13 @@ class PosterWithSomeDetails extends StatelessWidget {
                     Text(roundedNumber(filmInformation.voteAverage!), style: MyThemeData.darkTheme.textTheme.bodyMedium,),
                   ],
                 ),
-                Text(filmInformation.title??"",softWrap: true, style: MyThemeData.darkTheme.textTheme.bodyMedium,),
+                SizedBox(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width*0.18,
+                  child: Text(filmInformation.originalTitle??"",
+                    softWrap: true,
+                    style: MyThemeData.darkTheme.textTheme.bodyMedium,),
+                ),
                 Row(
                   children: [
                     Text(

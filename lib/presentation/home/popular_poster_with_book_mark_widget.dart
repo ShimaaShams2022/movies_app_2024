@@ -25,7 +25,7 @@ class PopularPosterWithBookMarkWidget extends StatelessWidget {
             Navigator.pushNamed(context, MovieDetailsWidget.routeName);
           },
             child: SizedBox(
-              height:240,
+              height:200,
                 width: 130,
                 child:CachedNetworkImage(imageUrl:"https://image.tmdb.org/t/p/w500$imageName",
                 fit: BoxFit.fill,
