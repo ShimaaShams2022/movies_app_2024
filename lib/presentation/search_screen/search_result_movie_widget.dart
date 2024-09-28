@@ -19,7 +19,7 @@ class SearchResultMovieWidget extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 20,right: 10,top: 10,bottom:10 ),
-              child:LoadingImage(imageName: film?.posterPath)
+              child:LoadingImage(imageName: film?.posterPath, width: 80, height:120,)
             ),
 
             Column(
@@ -38,7 +38,7 @@ class SearchResultMovieWidget extends StatelessWidget {
             )
           ],
         ),
-        Divider(
+        const Divider(
           color: MyThemeData.colorDivider,
           thickness: 2,
           indent: 20,

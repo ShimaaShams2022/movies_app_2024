@@ -9,9 +9,9 @@ class NoMoviesFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 200,),
+        const SizedBox(height: 200,),
         Image.asset(getFullPathImage("iconMovies.png")),
-        Text("No Movies Found")
+        const Text("No Movies Found")
       ],
     );
   }

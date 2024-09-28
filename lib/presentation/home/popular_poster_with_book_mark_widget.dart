@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/presentation/basic_files/loading_image.dart';
 import 'package:movies_app_2024/presentation/movie_details/movie_details_widget.dart';
 
 import '../basic_files/my_theme/my_theme_data.dart';
@@ -20,17 +21,13 @@ class PopularPosterWithBookMarkWidget extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.topStart,
       children: [
-        InkWell(
-          onTap: (){
-            Navigator.pushNamed(context, MovieDetailsWidget.routeName);
-          },
-            child: SizedBox(
-              height:200,
-                width: 130,
-                child:CachedNetworkImage(imageUrl:"https://image.tmdb.org/t/p/w500$imageName",
-                fit: BoxFit.fill,
-                ))
-        ),
+        SizedBox(
+          height:200,
+            width: 130,
+            child:LoadingImage(imageName: imageName,
+                width:MediaQuery.of(context).size.width*0.2,
+                height:MediaQuery.of(context).size.height*0.2),
+            ),
         const Positioned(
           top:-5,
           left: -8,
