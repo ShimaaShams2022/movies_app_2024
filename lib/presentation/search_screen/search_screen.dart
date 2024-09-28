@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app_2024/presentation/search_screen/no_movies_found.dart';
-import 'package:movies_app_2024/presentation/search_screen/search_field.dart';
-import 'package:movies_app_2024/presentation/search_screen/search_result_List_widget.dart';
-import 'package:movies_app_2024/presentation/search_screen/search_view_model.dart';
+import 'package:movies_app_2024/presentation/search_screen/search_cubit.dart';
 
-import '../../data/api_model/Results.dart';
+import 'package:movies_app_2024/presentation/search_screen/search_result_list_widget.dart';
+
 import '../../di.dart';
 import '../basic_files/ErrorStateWidget.dart';
 import '../basic_files/loading_widget.dart';
@@ -20,39 +19,32 @@ class SearchScreen extends StatefulWidget {
 }
 
 //field injection
-var searchViewModel = getIt.get<SearchViewModel>();
+var searchViewModel = getIt.get<SearchCubit>();
 
 class _SearchScreenState extends State<SearchScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    NoMoviesFound();
   }
-
 
   @override
   Widget build(BuildContext context) {
-    String? query;
-
-    List<Results>? searchMoviesList =[];
 
     return BlocProvider(
-      create: (BuildContext context) => searchViewModel,
+      create: (BuildContext context) =>searchViewModel,
       child: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 0, bottom: 5, left: 40, right: 40),
+            padding:
+                const EdgeInsets.only(top: 0, bottom: 5, left: 40, right: 40),
             child: TextField(
               onChanged: (query) {
-                if (query.isNotEmpty) {
-                  searchViewModel.loadSearchHomeScreen(query);
-                }
 
+                searchViewModel.searchMovies(query);
               },
+
               style: MyThemeData.darkTheme.textTheme.bodyLarge,
               decoration: InputDecoration(
                 hintText: "Search",
@@ -65,38 +57,46 @@ class _SearchScreenState extends State<SearchScreen> {
                 filled: true,
                 fillColor: MyThemeData.boxMovieBorderColor,
                 enabledBorder: OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: MyThemeData.boxMovieTextColor),
+                    borderSide: const BorderSide(color: MyThemeData.boxMovieTextColor),
                     borderRadius: BorderRadius.circular(40)),
                 focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: MyThemeData.boxMovieTextColor),
+                    borderSide:
+                        const BorderSide(color: MyThemeData.boxMovieTextColor),
                     borderRadius: BorderRadius.circular(40)),
               ),
             ),
           ),
-          BlocBuilder<SearchViewModel, SearchHomeState>(
-              builder: (context, state) {
-
-                switch (state) {
-                  case SearchLoadingState():
-                    {
-                      return LoadingStateWidget();
-                    }
-                  case SearchSuccessState():
-                    {
-                      searchMoviesList = state.movieResults;
-                      return SearchResultListWidget(resultList: searchMoviesList??[]);
-                    }
-                  case SearchErrorState():
-                    return ErrorStateWidget(state.exception);
-
+          BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
+            switch (state) {
+              case SearchInitialState():
+                {
+                  return const NoMoviesFound();
                 }
-              }),
+              case SearchLoadingState():
+                {
+                  return LoadingStateWidget();
+                }
+              case SearchSuccessState():
+                {
+
+                  var searchMoviesList =
+                      (state).movieResults;
+                  return SearchResultListWidget(
+                      resultList: searchMoviesList ?? []);
+                }
+              case SearchErrorState():
+                return ErrorStateWidget((state).exception);
+
+              case SearchEmptyState():
+                {
+                  return const NoMoviesFound();
+                }
+              default:
+                return const NoMoviesFound();
+            }
+          }),
         ],
       ),
-
-
     );
   }
 }

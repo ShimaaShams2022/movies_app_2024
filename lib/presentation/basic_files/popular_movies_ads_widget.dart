@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:movies_app_2024/presentation/basic_files/loading_image.dart';
 
 import 'package:movies_app_2024/presentation/home/popular_poster_with_book_mark_widget.dart';
 
@@ -24,7 +25,8 @@ class PopularMoviesAdsWidget extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height:MediaQuery.of(context).size.height*0.3,
-                child: Image.network('https://image.tmdb.org/t/p/w500${adsMovie.backdropPath}')
+                child:LoadingImage(imageName: adsMovie.backdropPath, width: 80, height:120,)
+                //Image.network('https://image.tmdb.org/t/p/w500${adsMovie.backdropPath}')
 
               ),
 

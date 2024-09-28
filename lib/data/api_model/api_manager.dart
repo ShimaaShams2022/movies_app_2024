@@ -82,6 +82,25 @@ class ApiManager{
     }
 
   }
+  Future<Result<MovieDetailsResponse>> loadMovieDetails(String movieId)async{
+    try{
+      String movieDetailsEndpoint = "$middleUrl/$movieId" ;
+
+      dio.options.headers['Authorization']='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDk4MzhiNzJjMmZjMDY5ODFlNDExOGI5Njg0MGY3YyIsIm5iZiI6MTcyNzIwNDc2My43NzgyMiwic3ViIjoiNjMyYzlkNDNjNTI1YzQwMDkxYzZkYTgzIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.aczZfEluA9b9ccjUvg1nGZnH4mtksXCK9Q54ojugtVM';
+      var response = await dio.get(movieDetailsEndpoint);
+      var movieDetailsResponse=MovieDetailsResponse.fromJson(response.data);
+
+      if(response.statusCode?.isSuccessCall()==true){
+        return Success(data: movieDetailsResponse);
+      }
+      var errorResponse=ErrorResponse.fromJson(response.data);
+      return ServerError(ServerErrorException(errorResponse.statusMessage));
+
+    }on Exception catch(ex){
+      return Error(ex);
+    }
+
+  }
 
   Future<Result<List<Results>?>> loadSimilarMovies(String movieId)async{
     try{

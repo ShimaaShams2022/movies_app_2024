@@ -10,13 +10,6 @@ class SearchResultListWidget extends StatelessWidget {
 
    List<Results> resultList;
 
-  List imagesList=[
-    "searchResultImage.png",
-    "searchResultImage.png",
-    "searchResultImage.png",
-
-
-  ];
 
   @override
   Widget build(BuildContext context) {
