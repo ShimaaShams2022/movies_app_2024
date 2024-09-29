@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app_2024/data/api_model/Extensions.dart';
 import 'package:movies_app_2024/data/api_model/movie_details/MovieDetailsResponse.dart';
+import 'package:movies_app_2024/data/api_model/movies_list_categories/MoviesListCategoriesResponse.dart';
 import 'package:movies_app_2024/data/api_model/popular_movies/popular_response.dart';
 import 'package:movies_app_2024/data/api_model/recommended/RecommendedResponse.dart';
 import 'package:movies_app_2024/data/api_model/similar_movies/SimilarMoviesResponse.dart';
@@ -27,7 +28,8 @@ class ApiManager{
   static  String NewReleasesMoviesEndpoint ="$middleUrl/upcoming";
   static  String RecommendedMoviesEndpoint ="$middleUrl/top_rated";
 
-  static  String GenresMoviesEndpoint ="$baseUrl//3/genre/movie/list";
+
+  static  String GenresMoviesEndpoint ="$baseUrl/3/genre/movie/list";
 
   Future<Result<List<Results>?>> loadPopularMovies()async{
     try{
@@ -37,6 +39,25 @@ class ApiManager{
     var popularResponse=PopularResponse.fromJson(response.data);
     if(response.statusCode?.isSuccessCall()==true){
         return Success(data: popularResponse.results);
+      }
+      var errorResponse=ErrorResponse.fromJson(response.data);
+      return ServerError(ServerErrorException(errorResponse.statusMessage));
+
+    }on Exception catch(ex){
+      return Error(ex);
+    }
+
+  }
+
+
+  Future<Result<List<Genres>?>> loadGenresMovies()async{
+    try{
+
+      dio.options.headers['Authorization']='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDk4MzhiNzJjMmZjMDY5ODFlNDExOGI5Njg0MGY3YyIsIm5iZiI6MTcyNzIwNDc2My43NzgyMiwic3ViIjoiNjMyYzlkNDNjNTI1YzQwMDkxYzZkYTgzIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.aczZfEluA9b9ccjUvg1nGZnH4mtksXCK9Q54ojugtVM';
+      var response = await dio.get( GenresMoviesEndpoint);
+      var genresResponse=MoviesListCategoriesResponse.fromJson(response.data);
+      if(response.statusCode?.isSuccessCall()==true){
+        return Success(data: genresResponse.genres);
       }
       var errorResponse=ErrorResponse.fromJson(response.data);
       return ServerError(ServerErrorException(errorResponse.statusMessage));
@@ -153,6 +174,27 @@ class ApiManager{
       var genresResponse=Genres.fromJson(response.data);
       if(response.statusCode?.isSuccessCall()==true){
         return Success(data: genresResponse);
+      }
+      var errorResponse=ErrorResponse.fromJson(response.data);
+      return ServerError(ServerErrorException(errorResponse.statusMessage));
+
+    }on Exception catch(ex){
+      return Error(ex);
+    }
+
+  }
+
+  Future<Result<List<Results>?>> loadCategoryMovies(String genresId)async{
+    try{
+
+      String categoryMoviesEndpoint = "$baseUrl/3/discover/movie?with_genres=$genresId" ;
+
+      dio.options.headers['Authorization']='Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNDk4MzhiNzJjMmZjMDY5ODFlNDExOGI5Njg0MGY3YyIsIm5iZiI6MTcyNzIwNDc2My43NzgyMiwic3ViIjoiNjMyYzlkNDNjNTI1YzQwMDkxYzZkYTgzIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.aczZfEluA9b9ccjUvg1nGZnH4mtksXCK9Q54ojugtVM';
+      var response = await dio.get(categoryMoviesEndpoint);
+      var categoryResponse=PopularResponse.fromJson(response.data);
+
+      if(response.statusCode?.isSuccessCall()==true){
+        return Success(data: categoryResponse.results);
       }
       var errorResponse=ErrorResponse.fromJson(response.data);
       return ServerError(ServerErrorException(errorResponse.statusMessage));
