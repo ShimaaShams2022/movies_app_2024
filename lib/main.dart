@@ -3,6 +3,7 @@ import 'package:movies_app_2024/di.dart';
 import 'package:movies_app_2024/presentation/basic_files/default_screen.dart';
 import 'package:movies_app_2024/presentation/basic_files/my_theme/my_theme_data.dart';
 import 'package:movies_app_2024/presentation/categories_screen/categories_screen.dart';
+import 'package:movies_app_2024/presentation/categories_screen/category_details_screen.dart';
 import 'package:movies_app_2024/presentation/home/home_screen.dart';
 import 'package:movies_app_2024/presentation/movie_details/movie_details_widget.dart';
 import 'package:movies_app_2024/presentation/search_screen/search_screen.dart';
@@ -29,7 +30,9 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (_) => HomeScreen(),
           SearchScreen.routeName: (_) => SearchScreen(),
           WatchListScreen.routeName: (_) => WatchListScreen(),
-          MovieDetailsWidget.routeName: (_) => MovieDetailsWidget()
+          MovieDetailsWidget.routeName: (_) => MovieDetailsWidget(),
+          CategoryDetailsScreen.routeName: (_) =>CategoryDetailsScreen(),
+
         },
         theme: MyThemeData.darkTheme,
     );

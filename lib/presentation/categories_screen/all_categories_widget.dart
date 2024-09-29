@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app_2024/presentation/categories_screen/category_widget.dart';
 
-class AllCategoriesWidget extends StatelessWidget {
-   AllCategoriesWidget({super.key});
+import '../../data/api_model/Genres.dart';
 
-  final List<String> categories=[
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png",
-    "categoryImage.png"
-  ];
+class AllCategoriesWidget extends StatelessWidget {
+   AllCategoriesWidget(this.categories,{super.key});
+
+   List<Genres>? categories;
+
+
 
   @override
   Widget build(BuildContext context) {
+
     return Expanded(
       child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -26,9 +20,11 @@ class AllCategoriesWidget extends StatelessWidget {
          crossAxisSpacing: 1,
          childAspectRatio: 1.7,
       ),
-      itemCount:categories.length,
+      itemCount:categories?.length,
         itemBuilder: (context,index){
-        return CategoryWidget(imageName: categories[index]);
+        return CategoryWidget(
+          categoryName: categories?[index].name??"",
+          categoryId:categories?[index].id.toString()??"");
         },
       ),
     );
