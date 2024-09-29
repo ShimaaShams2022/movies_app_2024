@@ -1,4 +1,4 @@
-import 'package:injectable/injectable.dart';;
+import 'package:injectable/injectable.dart';
 import 'package:movies_app_2024/data/api_model/api_manager.dart';
 
 import 'package:movies_app_2024/domain/Result.dart';
